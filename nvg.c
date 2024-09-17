@@ -33,6 +33,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <memory.h>
+
 
 #define GLFW_INCLUDE_ES3
 #define GLFW_INCLUDE_GLEXT
@@ -742,15 +747,6 @@ void nvgDebugDumpPathCache(NVGcontext* ctx);
 
 
 // FILE: nanovg.c
-
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <memory.h>
-
-
-
 #ifdef _MSC_VER
 #pragma warning(disable: 4100)  // unreferenced formal parameter
 #pragma warning(disable: 4127)  // conditional expression is constant
@@ -1092,10 +1088,6 @@ void nvgDeleteInternal(NVGcontext* ctx)
 
 void nvgBeginFrame(NVGcontext* ctx, float windowWidth, float windowHeight, float devicePixelRatio)
 {
-/*	printf("Tris: draws:%d  fill:%d  stroke:%d  text:%d  TOT:%d\n",
-		ctx->drawCallCount, ctx->fillTriCount, ctx->strokeTriCount, ctx->textTriCount,
-		ctx->fillTriCount+ctx->strokeTriCount+ctx->textTriCount);*/
-
 	ctx->nstates = 0;
 	nvgSave(ctx);
 	nvgReset(ctx);
@@ -5364,16 +5356,8 @@ NVGLUframebuffer* nvgluCreateFramebuffer(NVGcontext* ctx, int w, int h, int imag
 
 	fb->image = nvgCreateImageRGBA(ctx, w, h, imageFlags | NVG_IMAGE_FLIPY | NVG_IMAGE_PREMULTIPLIED, NULL);
 
-#if defined NANOVG_GL2
-	fb->texture = nvglImageHandleGL2(ctx, fb->image);
-#elif defined NANOVG_GL3
-	fb->texture = nvglImageHandleGL3(ctx, fb->image);
-#elif defined NANOVG_GLES2
-	fb->texture = nvglImageHandleGLES2(ctx, fb->image);
-#elif defined NANOVG_GLES3
-	fb->texture = nvglImageHandleGLES3(ctx, fb->image);
-#endif
 
+	fb->texture = nvglImageHandleGLES3(ctx, fb->image);
 	fb->ctx = ctx;
 
 	// frame buffer object
@@ -6734,26 +6718,11 @@ int stopGPUTimer(GPUtimer* timer, float* times, int maxTimes);
 // timer query support
 #ifndef GL_ARB_timer_query
 #define GL_TIME_ELAPSED                   0x88BF
-//typedef void (APIENTRY *pfnGLGETQUERYOBJECTUI64V)(GLuint id, GLenum pname, GLuint64* params);
-//pfnGLGETQUERYOBJECTUI64V glGetQueryObjectui64v = 0;
 #endif
 
 void initGPUTimer(GPUtimer* timer)
 {
 	memset(timer, 0, sizeof(*timer));
-
-/*	timer->supported = glfwExtensionSupported("GL_ARB_timer_query");
-	if (timer->supported) {
-#ifndef GL_ARB_timer_query
-		glGetQueryObjectui64v = (pfnGLGETQUERYOBJECTUI64V)glfwGetProcAddress("glGetQueryObjectui64v");
-		printf("glGetQueryObjectui64v=%p\n", glGetQueryObjectui64v);
-		if (!glGetQueryObjectui64v) {
-			timer->supported = GL_FALSE;
-			return;
-		}
-#endif
-		glGenQueries(GPU_QUERY_COUNT, timer->queries);
-	}*/
 }
 
 void startGPUTimer(GPUtimer* timer)
@@ -6777,15 +6746,6 @@ int stopGPUTimer(GPUtimer* timer, float* times, int maxTimes)
 	while (available && timer->ret <= timer->cur) {
 		// check for results if there are any
 		glGetQueryObjectuiv(timer->queries[timer->ret % GPU_QUERY_COUNT], GL_QUERY_RESULT_AVAILABLE, &available);
-		if (available) {
-/*			GLuint64 timeElapsed = 0;
-			glGetQueryObjectui64v(timer->queries[timer->ret % GPU_QUERY_COUNT], GL_QUERY_RESULT, &timeElapsed);
-			timer->ret++;
-			if (n < maxTimes) {
-				times[n] = (float)((double)timeElapsed * 1e-9);
-				n++;
-			}*/
-		}
 	}
 	return n;
 }
@@ -6989,7 +6949,8 @@ int main()
 		glfwGetCursorPos(window, &mx, &my);
 		glfwGetWindowSize(window, &winWidth, &winHeight);
 		glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
-		// Calculate pixel ration for hi-dpi devices.
+		
+        // Calculate pixel ration for hi-dpi devices.
 		pxRatio = (float)fbWidth / (float)winWidth;
 
 		// Update and render
