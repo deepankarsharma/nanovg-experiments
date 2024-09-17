@@ -59,24 +59,6 @@
 
 
 // FILE: nanovg.h
-//
-// Copyright (c) 2013 Mikko Mononen memon@inside.org
-//
-// This software is provided 'as-is', without any express or implied
-// warranty.  In no event will the authors be held liable for any damages
-// arising from the use of this software.
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-// 1. The origin of this software must not be misrepresented; you must not
-//    claim that you wrote the original software. If you use this software
-//    in a product, an acknowledgment in the product documentation would be
-//    appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//    misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-//
-
 #ifndef NANOVG_H
 #define NANOVG_H
 
@@ -5332,23 +5314,6 @@ GLuint nvglImageHandleGLES3(NVGcontext* ctx, int image)
 
 
 // FILE: nanovg_gl_utils.h
-//
-// Copyright (c) 2009-2013 Mikko Mononen memon@inside.org
-//
-// This software is provided 'as-is', without any express or implied
-// warranty.  In no event will the authors be held liable for any damages
-// arising from the use of this software.
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-// 1. The origin of this software must not be misrepresented; you must not
-//    claim that you wrote the original software. If you use this software
-//    in a product, an acknowledgment in the product documentation would be
-//    appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//    misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-//
 #ifndef NANOVG_GL_UTILS_H
 #define NANOVG_GL_UTILS_H
 
@@ -5526,9 +5491,6 @@ void saveScreenShot(int w, int h, int premult, const char* name);
 #define ICON_LOGIN 0xE740
 #define ICON_TRASH 0xE729
 
-//static float minf(float a, float b) { return a < b ? a : b; }
-//static float maxf(float a, float b) { return a > b ? a : b; }
-//static float absf(float a) { return a >= 0.0f ? a : -a; }
 static float clampf(float a, float mn, float mx) { return a < mn ? mn : (a > mx ? mx : a); }
 
 // Returns 1 if col.rgba is 0.0f,0.0f,0.0f,0.0f, 0 otherwise
@@ -6943,26 +6905,6 @@ void renderGraph(NVGcontext* vg, float x, float y, PerfGraph* fps)
 
 
 // FILE: example_gles3.c
-//
-// Copyright (c) 2013 Mikko Mononen memon@inside.org
-//
-// This software is provided 'as-is', without any express or implied
-// warranty.  In no event will the authors be held liable for any damages
-// arising from the use of this software.
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-// 1. The origin of this software must not be misrepresented; you must not
-//    claim that you wrote the original software. If you use this software
-//    in a product, an acknowledgment in the product documentation would be
-//    appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//    misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-//
-
-
-
 void errorcb(int error, const char* desc)
 {
 	printf("GLFW error %d: %s\n", error, desc);
