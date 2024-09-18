@@ -3,3 +3,8 @@ nvg
 *~
 .#*
 TAGS
+demo
+libnvg.so
+perf.data
+example_oui
+*.o
