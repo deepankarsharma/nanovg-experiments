@@ -10,7 +10,7 @@ LDFLAGS := -shared
 LDFLAGS += $(EXTRA_LDFLAGS)
 
 # Library flags for demo
-LIBS := -lm -lGLESv2 -lglfw
+LIBS := -lm -lGLESv2 -lglfw3
 LIBS += $(EXTRA_LIBS)
 
 # Source files

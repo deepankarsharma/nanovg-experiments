@@ -8,3 +8,4 @@ libnvg.so
 perf.data
 example_oui
 *.o
+*.a
