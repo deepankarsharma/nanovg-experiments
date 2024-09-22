@@ -35,11 +35,6 @@
 #include <stddef.h>
 #include "nvg.h"
 
-#define GLFW_INCLUDE_ES3
-#define GLFW_INCLUDE_GLEXT
-#include <GLFW/glfw3.h>
-
-
 #define FONTSTASH_IMPLEMENTATION
 #include "fontstash.h"
 
@@ -5391,6 +5386,11 @@ int loadDemoData(NVGcontext* vg, DemoData* data)
 	data->fontEmoji = nvgCreateFont(vg, "emoji", "NotoEmoji-Regular.ttf");
 	if (data->fontEmoji == -1) {
 		printf("Could not add font emoji.\n");
+		return -1;
+	}
+    data->fontEmoji = nvgCreateFont(vg, "mono", "RobotoMono-Regular.ttf");
+	if (data->fontEmoji == -1) {
+		printf("Could not add mono font.\n");
 		return -1;
 	}
 	nvgAddFallbackFontId(vg, data->fontNormal, data->fontEmoji);

@@ -27,6 +27,26 @@ static void key(GLFWwindow* window, int key, int scancode, int action, int mods)
 		premult = !premult;
 }
 
+static void render_frame(NVGcontext *vg) {
+  float lineh;
+  const char *text = "(defun (foobar x y z) (+ x y z))";
+  const char *start;
+  const char *end;
+
+  nvgSave(vg);
+  nvgFontSize(vg, 16.0f);
+  nvgFontFace(vg, "mono");
+  nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+  nvgTextMetrics(vg, NULL, NULL, &lineh);
+
+  start = text;
+  end = text + strlen(text);
+  nvgFillColor(vg, nvgRGBA(0, 0, 0, 255));
+  nvgText(vg, 30, 200, start, end);
+
+  nvgRestore(vg);
+}
+
 int main()
 {
 	GLFWwindow* window;
@@ -75,6 +95,7 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
+        glfwWaitEventsTimeout(1/15.);
 		double mx, my, t, dt;
 		int winWidth, winHeight;
 		int fbWidth, fbHeight;
@@ -94,10 +115,8 @@ int main()
 
 		// Update and render
 		glViewport(0, 0, fbWidth, fbHeight);
-		if (premult)
-			glClearColor(0,0,0,0);
-		else
-			glClearColor(0.3f, 0.3f, 0.32f, 1.0f);
+		
+        glClearColor(0.98f, 0.94f, 0.84f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 
 		glEnable(GL_BLEND);
@@ -107,8 +126,7 @@ int main()
 
 		nvgBeginFrame(vg, winWidth, winHeight, pxRatio);
 
-		renderDemo(vg, mx,my, winWidth,winHeight, t, blowup, &data);
-		renderGraph(vg, 5,5, &fps);
+		render_frame(vg);
 
 		nvgEndFrame(vg);
 

@@ -2784,7 +2784,7 @@ int stopGPUTimer(GPUtimer* timer, float* times, int maxTimes);
 
 
 struct DemoData {
-    int fontNormal, fontBold, fontIcons, fontEmoji;
+    int fontNormal, fontBold, fontIcons, fontEmoji, fontMono;
     int images[12];
 };
 typedef struct DemoData DemoData;
